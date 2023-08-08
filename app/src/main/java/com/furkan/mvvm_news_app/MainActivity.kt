@@ -9,6 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.furkan.mvvm_news_app.news_main.NewsMainScreen
 import com.furkan.mvvm_news_app.ui.theme.MVVMNewsAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -21,10 +22,10 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
                 NavHost(
                     navController = navController,
-                    startDestination = "news_list_screen"
+                    startDestination = "news_main_screen"
                 ) {
-                    composable("news_list_screen") {
-
+                    composable("news_main_screen") {
+                        NewsMainScreen(navController = navController)
                     }
                     composable(
                         "news_detail_screen/{newsName}",

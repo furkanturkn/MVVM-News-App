@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.furkan.mvvm_news_app.data.remote.responses.Article
 import com.furkan.mvvm_news_app.repository.NewsRepository
 import com.furkan.mvvm_news_app.util.Constants.NEWS_API_PAGE_SIZE
+import com.furkan.mvvm_news_app.util.Constants.NEWS_API_TOPIC
 import com.furkan.mvvm_news_app.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -31,7 +32,7 @@ class NewsMainViewModel @Inject constructor(
     fun getBreakingNews() = viewModelScope.launch {
         isLoading.value = true
         val result = repository.searchForNews(
-            searchQuery = "football",
+            searchQuery = NEWS_API_TOPIC,
             pageNumber = currentPage
         )
 

@@ -11,4 +11,6 @@ object Constants {
     const val NEWS_API_PAGE_SIZE = 4
     const val DEFAULT_NEWS_API_PAGE_NUMBER = 1
 
+    const val NEWS_API_TOPIC = "football"
+
 }

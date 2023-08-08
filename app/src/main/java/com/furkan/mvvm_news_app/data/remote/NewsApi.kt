@@ -14,7 +14,7 @@ interface NewsApi {
         @Query("page")
         pageNumber: Int = 1,
         @Query("pageSize")
-        pageSize: Int? = 6,
+        pageSize: Int? = 4,
         @Query("apiKey")
         apiKey: String = API_KEY
     ): NewsResponse

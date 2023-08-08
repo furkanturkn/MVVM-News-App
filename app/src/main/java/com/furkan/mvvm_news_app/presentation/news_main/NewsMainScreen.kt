@@ -15,12 +15,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
@@ -31,6 +35,7 @@ import androidx.navigation.NavController
 import coil.compose.SubcomposeAsyncImage
 import coil.compose.SubcomposeAsyncImageContent
 import coil.request.ImageRequest
+import coil.size.Size
 import com.furkan.mvvm_news_app.R
 import com.furkan.mvvm_news_app.data.remote.responses.Article
 
@@ -64,39 +69,45 @@ fun ArticleList(
 ) {
     val articleList by remember { viewModel.newsList }
     val endReachOfPage by remember { viewModel.endReachOfPage }
-    val loadError by remember { viewModel.loadError }
     val isLoading by remember { viewModel.isLoading }
 
-    LazyColumn(contentPadding = PaddingValues(16.dp)) {
-        val itemCount = if (articleList.size % 2 == 0) {
-            articleList.size / 2
-        } else {
-            (articleList.size / 2) + 1
+    LazyColumn(
+        contentPadding = PaddingValues(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.inversePrimary)
+    ) {
+        items(articleList.size) { articleIndex ->
+            ArticleComposable(
+                article = articleList[articleIndex],
+                navController = navController,
+                modifier = Modifier.fillMaxWidth()
+            )
         }
-        items(itemCount) {
-            if (it >= itemCount - 1 && !endReachOfPage && !isLoading) {
+
+        if (isLoading && !endReachOfPage) {
+            item {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    contentAlignment = Center
+                ) {
+                    CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
+                }
+            }
+        }
+
+        if (!isLoading && !endReachOfPage) {
+            item {
                 LaunchedEffect(key1 = true) {
                     viewModel.getBreakingNews()
                 }
             }
-            ArticleRow(
-                rowIndex = it,
-                entries = articleList,
-                navController = navController
-            )
-        }
-    }
-
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Center
-    ) {
-        if (isLoading) {
-            CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
         }
     }
 }
-
 
 @Composable
 fun ArticleComposable(
@@ -104,25 +115,34 @@ fun ArticleComposable(
     navController: NavController,
     modifier: Modifier = Modifier
 ) {
-    Box(
-        contentAlignment = Center,
+    Column(
         modifier = modifier
-            .shadow(5.dp, RoundedCornerShape(10.dp))
-            .clip(RoundedCornerShape(10.dp))
-            .aspectRatio(1f)
-            .background(MaterialTheme.colorScheme.surface)
             .clickable {
                 navController.navigate(
                     "article_detail_screen/${Uri.encode(article.url)}"
                 )
             }
+            .background(
+                brush = Brush.verticalGradient(
+                    colors = listOf(MaterialTheme.colorScheme.inversePrimary, Color.White),
+                    startY = 0f,
+                    endY = Float.POSITIVE_INFINITY
+                )
+            )
     ) {
-        Column {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(CenterHorizontally)
+                .clip(RoundedCornerShape(20.dp)) // Adjust the corner radius as needed
+                .background(MaterialTheme.colorScheme.inversePrimary)
+        ) {
             SubcomposeAsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
                     .data(article.urlToImage)
                     .crossfade(true)
                     .build(),
+                contentScale = ContentScale.Crop,
                 contentDescription = article.title,
                 loading = {
                     CircularProgressIndicator(
@@ -132,45 +152,30 @@ fun ArticleComposable(
                 },
                 success = {
                     SubcomposeAsyncImageContent()
-                },
-                modifier = Modifier
-                    .align(CenterHorizontally)
+                }
             )
+
             Text(
                 text = article.title,
                 fontSize = 20.sp,
                 textAlign = TextAlign.Center,
-                modifier = Modifier.fillMaxWidth()
-            )
-        }
-    }
-}
+                color = Color.White,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(12.dp)
+                    .background(Color.Black.copy(alpha = 0.7f))
 
-@Composable
-fun ArticleRow(
-    rowIndex: Int,
-    entries: List<Article>,
-    navController: NavController
-) {
-    Column {
-        Row {
-            ArticleComposable(
-                article = entries[rowIndex * 2],
-                navController = navController,
-                modifier = Modifier.weight(1f)
             )
-            Spacer(modifier = Modifier.width(16.dp))
-            if (entries.size >= rowIndex * 2 + 2) {
-                ArticleComposable(
-                    article = entries[rowIndex * 2 + 1],
-                    navController = navController,
-                    modifier = Modifier.weight(1f)
-                )
-            } else {
-                Spacer(modifier = Modifier.weight(1f))
-            }
         }
-        Spacer(modifier = Modifier.height(16.dp))
+        Text(
+            text = article.description.take(130) + "...",
+            fontSize = 16.sp,
+            textAlign = TextAlign.Justify,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(12.dp)
+
+        )
     }
 }
 

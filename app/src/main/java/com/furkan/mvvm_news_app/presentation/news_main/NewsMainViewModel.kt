@@ -39,7 +39,8 @@ class NewsMainViewModel @Inject constructor(
             is Resource.Success -> {
                 endReachOfPage.value = currentPage * PAGE_SIZE >= result.data!!.totalResults
                 val articles = result.data.articles.filterNot { entry ->
-                    entry.urlToImage.isNullOrEmpty()
+                    entry.urlToImage.isNullOrEmpty() ||
+                            newsList.value.any { it.title == entry.title }
                 }.mapIndexed { _, entry ->
                     Article(
                         id = entry.id,

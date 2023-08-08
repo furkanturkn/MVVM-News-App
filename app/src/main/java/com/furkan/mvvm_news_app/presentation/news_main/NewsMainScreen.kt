@@ -46,32 +46,32 @@ fun NewsMainScreen(
             Spacer(modifier = Modifier.height(20.dp))
             Image(
                 painter = painterResource(id = R.drawable.worldnewsicon),
-                contentDescription = "Pokemon",
+                contentDescription = "news icon",
                 modifier = Modifier
                     .fillMaxWidth()
                     .align(CenterHorizontally)
             )
             Spacer(modifier = Modifier.height(16.dp))
-            PokemonList(navController = navController)
+            ArticleList(navController = navController)
         }
     }
 }
 
 @Composable
-fun PokemonList(
+fun ArticleList(
     navController: NavController,
     viewModel: NewsMainViewModel = hiltViewModel()
 ) {
-    val pokemonList by remember { viewModel.newsList }
+    val articleList by remember { viewModel.newsList }
     val endReachOfPage by remember { viewModel.endReachOfPage }
     val loadError by remember { viewModel.loadError }
     val isLoading by remember { viewModel.isLoading }
 
     LazyColumn(contentPadding = PaddingValues(16.dp)) {
-        val itemCount = if (pokemonList.size % 2 == 0) {
-            pokemonList.size / 2
+        val itemCount = if (articleList.size % 2 == 0) {
+            articleList.size / 2
         } else {
-            (pokemonList.size / 2) + 1
+            (articleList.size / 2) + 1
         }
         items(itemCount) {
             if (it >= itemCount - 1 && !endReachOfPage && !isLoading) {
@@ -81,7 +81,7 @@ fun PokemonList(
             }
             ArticleRow(
                 rowIndex = it,
-                entries = pokemonList,
+                entries = articleList,
                 navController = navController
             )
         }

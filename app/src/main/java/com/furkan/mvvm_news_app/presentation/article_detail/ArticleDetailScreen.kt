@@ -4,15 +4,19 @@ import android.net.Uri
 import android.view.ViewGroup
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -23,8 +27,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavController
-import androidx.compose.material3.Surface
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.Alignment
 
@@ -33,22 +35,27 @@ fun ArticleDetailScreen(
     articleUrl: String,
     navController: NavController,
 ) {
-    Surface(
-        color = MaterialTheme.colorScheme.inversePrimary,
-        modifier = Modifier.fillMaxSize()
-    ) {
-        Row {
-            PokemonDetailTopSection(
-                navController,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .fillMaxHeight(0.2f)
-                    .align(Alignment.TopCenter)
-            )
-        }
-            CustomWebView(Uri.decode(articleUrl))
 
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.primary)
+    ) {
+        ArticleDetailTopSection(
+            navController,
+            modifier = Modifier
+                .fillMaxWidth()
+        )
+        Spacer(modifier = Modifier.height(24.dp))
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .weight(0.8f)
+        ) {
+            CustomWebView(Uri.decode(articleUrl))
+        }
     }
+
 
 }
 
@@ -56,10 +63,6 @@ fun ArticleDetailScreen(
 fun CustomWebView(webViewUrl: String) {
     AndroidView(factory = {
         WebView(it).apply {
-            layoutParams = ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT
-            )
             webViewClient = WebViewClient()
             loadUrl(webViewUrl)
         }
@@ -69,21 +72,14 @@ fun CustomWebView(webViewUrl: String) {
 }
 
 @Composable
-fun PokemonDetailTopSection(
+fun ArticleDetailTopSection(
     navController: NavController,
     modifier: Modifier = Modifier
 ) {
     Box(
         contentAlignment = Alignment.TopStart,
         modifier = modifier
-            .background(
-                Brush.verticalGradient(
-                    listOf(
-                        Color.Black,
-                        Color.Transparent
-                    )
-                )
-            )
+            .background(MaterialTheme.colorScheme.primary)
     ) {
         Icon(
             imageVector = Icons.Default.ArrowBack,

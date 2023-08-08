@@ -11,9 +11,8 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.furkan.mvvm_news_app.presentation.article_detail.ArticleDetailScreen
 import com.furkan.mvvm_news_app.presentation.news_main.NewsMainScreen
-import com.furkan.mvvm_news_app.ui.theme.MVVMNewsAppTheme
+import com.furkan.mvvm_news_app.presentation.theme.MVVMNewsAppTheme
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.Locale
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {

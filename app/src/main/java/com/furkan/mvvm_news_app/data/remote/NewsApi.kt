@@ -1,7 +1,7 @@
 package com.furkan.mvvm_news_app.data.remote
 
+import com.furkan.mvvm_news_app.BuildConfig
 import com.furkan.mvvm_news_app.data.remote.responses.NewsResponse
-import com.furkan.mvvm_news_app.util.Constants.API_KEY
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -16,7 +16,7 @@ interface NewsApi {
         @Query("pageSize")
         pageSize: Int? = 4,
         @Query("apiKey")
-        apiKey: String = API_KEY
+        apiKey: String = BuildConfig.API_KEY
     ): NewsResponse
 
 }

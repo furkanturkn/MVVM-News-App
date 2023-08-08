@@ -5,7 +5,6 @@ import com.furkan.mvvm_news_app.data.remote.responses.NewsResponse
 import com.furkan.mvvm_news_app.util.Resource
 import dagger.hilt.android.scopes.ActivityScoped
 import timber.log.Timber
-import java.lang.Exception
 import javax.inject.Inject
 
 @ActivityScoped

@@ -1,4 +1,4 @@
-package com.furkan.mvvm_news_app.ui.theme
+package com.furkan.mvvm_news_app.presentation.theme
 
 import android.app.Activity
 import android.os.Build

@@ -1,8 +1,8 @@
 package com.furkan.mvvm_news_app.di
 
+import com.furkan.mvvm_news_app.BuildConfig
 import com.furkan.mvvm_news_app.data.remote.NewsApi
 import com.furkan.mvvm_news_app.repository.NewsRepository
-import com.furkan.mvvm_news_app.util.Constants.BASE_URL
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,7 +20,7 @@ object AppModule {
     fun provideNewsApi(): NewsApi {
         return Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl(BASE_URL)
+            .baseUrl(BuildConfig.BASE_URL)
             .build()
             .create(NewsApi::class.java)
     }

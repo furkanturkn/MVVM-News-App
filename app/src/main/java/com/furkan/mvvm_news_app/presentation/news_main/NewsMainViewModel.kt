@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.furkan.mvvm_news_app.data.remote.responses.Article
 import com.furkan.mvvm_news_app.repository.NewsRepository
-import com.furkan.mvvm_news_app.util.Constants.PAGE_SIZE
+import com.furkan.mvvm_news_app.util.Constants.NEWS_API_PAGE_SIZE
 import com.furkan.mvvm_news_app.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -37,7 +37,8 @@ class NewsMainViewModel @Inject constructor(
 
         when (result) {
             is Resource.Success -> {
-                endReachOfPage.value = currentPage * PAGE_SIZE >= result.data!!.totalResults
+                endReachOfPage.value =
+                    currentPage * NEWS_API_PAGE_SIZE >= result.data!!.totalResults
                 val articles = result.data.articles.filterNot { entry ->
                     entry.urlToImage.isNullOrEmpty() ||
                             newsList.value.any { it.title == entry.title }

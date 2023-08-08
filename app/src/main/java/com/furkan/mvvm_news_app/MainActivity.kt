@@ -12,6 +12,9 @@ import androidx.navigation.navArgument
 import com.furkan.mvvm_news_app.presentation.article_detail.ArticleDetailScreen
 import com.furkan.mvvm_news_app.presentation.news_main.NewsMainScreen
 import com.furkan.mvvm_news_app.presentation.theme.MVVMNewsAppTheme
+import com.furkan.mvvm_news_app.util.Constants.NAV_ARG_ARTICLE_URL
+import com.furkan.mvvm_news_app.util.Constants.NOT_FOUND_URL
+import com.furkan.mvvm_news_app.util.Screen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -23,24 +26,24 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
                 NavHost(
                     navController = navController,
-                    startDestination = "news_main_screen"
+                    startDestination = Screen.NewsMainScreen.route
                 ) {
-                    composable("news_main_screen") {
+                    composable(Screen.NewsMainScreen.route) {
                         NewsMainScreen(navController = navController)
                     }
                     composable(
-                        "article_detail_screen/{newsUrl}",
+                        "${Screen.ArticleDetailScreen.route}/{$NAV_ARG_ARTICLE_URL}",
                         arguments = listOf(
-                            navArgument("newsUrl") {
+                            navArgument(NAV_ARG_ARTICLE_URL) {
                                 type = NavType.StringType
                             }
                         )
                     ) {
                         val newsUrl = remember {
-                            it.arguments?.getString("newsUrl")
+                            it.arguments?.getString(NAV_ARG_ARTICLE_URL)
                         }
                         ArticleDetailScreen(
-                            articleUrl = newsUrl ?: "",
+                            articleUrl = newsUrl ?: NOT_FOUND_URL,
                             navController = navController
                         )
 

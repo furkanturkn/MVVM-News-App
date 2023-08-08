@@ -28,6 +28,7 @@ import coil.compose.SubcomposeAsyncImage
 import coil.compose.SubcomposeAsyncImageContent
 import coil.request.ImageRequest
 import com.furkan.mvvm_news_app.data.remote.responses.Article
+import com.furkan.mvvm_news_app.util.Constants.ARTICLE_DETAIL_TEXT_LENGTH
 
 @Composable
 fun ArticleItem(
@@ -88,7 +89,7 @@ fun ArticleItem(
             )
         }
         Text(
-            text = article.description.take(120) + "...",
+            text = "${article.description.take(ARTICLE_DETAIL_TEXT_LENGTH)}...",
             fontSize = 16.sp,
             textAlign = TextAlign.Justify,
             modifier = Modifier

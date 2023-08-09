@@ -6,5 +6,9 @@
     <string name="yes">Yes</string>
     <string name="cancel">Cancel</string>
     <string name="info">Info</string>
+    <string name="error_unknown">Unknown error.</string>
+    <string name="error_non">No error.</string>
+    <string name="error_couldnt_reach_server">Could not reach the server!</string>
+    <string name="oops_something_went_wrong">Opps.. Something went wrong.</string>
 
 </resources>

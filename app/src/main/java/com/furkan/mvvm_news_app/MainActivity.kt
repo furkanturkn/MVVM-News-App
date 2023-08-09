@@ -29,9 +29,7 @@ class MainActivity : ComponentActivity() {
                     startDestination = Screen.NewsMainScreen.route
                 ) {
                     composable(Screen.NewsMainScreen.route) {
-                        NewsMainScreen(
-                            navController = navController
-                        )
+                        NewsMainScreen(navController = navController)
                     }
                     composable(
                         "${Screen.ArticleDetailScreen.route}/{$NAV_ARG_ARTICLE_URL}",

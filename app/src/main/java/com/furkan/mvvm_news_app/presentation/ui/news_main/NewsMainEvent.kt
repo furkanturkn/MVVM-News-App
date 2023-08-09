@@ -1,5 +1,7 @@
 package com.furkan.mvvm_news_app.presentation.ui.news_main
 
+import com.furkan.mvvm_news_app.util.UiText
+
 sealed class NewsMainEvent {
     object ShowDatePickerDialog : NewsMainEvent()
     object DismissDatePickerDialog : NewsMainEvent()

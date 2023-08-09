@@ -86,7 +86,7 @@ fun DatePickerUI(
                     .padding(horizontal = 10.dp),
                 onClick = {
                     onDismissRequest()
-                    onDatePicked("${chosenYear.value}-${chosenMonth.value}-${chosenDay.value}".zeroPadDateAndMonth())
+                    onDatePicked("${chosenYear.value}-${chosenMonth.value + 1}-${chosenDay.value}".zeroPadDateAndMonth())
                 }
             ) {
                 Text(

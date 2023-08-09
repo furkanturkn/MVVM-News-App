@@ -9,10 +9,13 @@ import com.furkan.mvvm_news_app.repository.NewsRepository
 import com.furkan.mvvm_news_app.util.Constants.NEWS_API_PAGE_SIZE
 import com.furkan.mvvm_news_app.util.Constants.NEWS_API_TOPIC
 import com.furkan.mvvm_news_app.util.Resource
+import com.furkan.mvvm_news_app.util.UiText
 import com.furkan.mvvm_news_app.util.getCurrentDateTimeString
 import com.furkan.mvvm_news_app.util.nDaysAfterFromDateString
 import com.furkan.mvvm_news_app.util.nDaysBeforeFromDateString
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -32,7 +35,7 @@ class NewsMainViewModel @Inject constructor(
     var newsList = mutableStateOf<List<Article>>(listOf())
     var isLoading = mutableStateOf(false)
     var endReachOfPage = mutableStateOf(false)
-    var loadError = mutableStateOf("")
+    var loadError = mutableStateOf(UiText.errorNon())
 
     init {
         fetchNews(getCurrentDateTimeString().nDaysBeforeFromDateString(10))
@@ -51,8 +54,14 @@ class NewsMainViewModel @Inject constructor(
             }
             is NewsMainEvent.UpdatePickedDate -> {
                 _pickedDate.value = event.pickedDate
+                refreshNews()
             }
         }
+    }
+
+    private fun refreshNews() {
+        currentPage = 1
+        newsList.value = listOf()
     }
 
     fun fetchNews(fromDate: String) = viewModelScope.launch {
@@ -86,13 +95,13 @@ class NewsMainViewModel @Inject constructor(
                 }
                 currentPage++
 
-                loadError.value = ""
+                loadError.value = UiText.errorNon()
                 isLoading.value = false
                 newsList.value += articles
             }
 
             is Resource.Error -> {
-                loadError.value = result.message!!
+                loadError.value = result.message ?: UiText.unknownError()
                 isLoading.value = false
             }
 

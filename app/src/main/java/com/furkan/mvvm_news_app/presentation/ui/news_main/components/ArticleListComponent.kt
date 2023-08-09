@@ -20,8 +20,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.furkan.mvvm_news_app.presentation.ui.news_main.NewsMainViewModel
-import com.furkan.mvvm_news_app.util.getCurrentDateTimeString
-import com.furkan.mvvm_news_app.util.nDaysBeforeFromDateString
 
 @Composable
 fun ArticleList(

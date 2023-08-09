@@ -2,9 +2,9 @@ package com.furkan.mvvm_news_app.repository
 
 import com.furkan.mvvm_news_app.data.remote.NewsApi
 import com.furkan.mvvm_news_app.data.remote.responses.NewsResponse
+import com.furkan.mvvm_news_app.util.ApiResponseUtils.handleException
 import com.furkan.mvvm_news_app.util.Resource
 import dagger.hilt.android.scopes.ActivityScoped
-import timber.log.Timber
 import javax.inject.Inject
 
 @ActivityScoped
@@ -17,18 +17,19 @@ class NewsRepository @Inject constructor(
         fromDate: String,
         toDate: String
     ): Resource<NewsResponse> {
-        val response = try {
-            api.getNews(
+
+        return try {
+            val response = api.getNews(
                 searchQuery = searchQuery,
                 pageNumber = pageNumber,
                 fromDate = fromDate,
                 toDate = toDate
             )
-        } catch (e: Exception) {
-            Timber.e(e)
-            return Resource.Error(message = e.localizedMessage!!)
+            Resource.Success(response)
+        } catch (e: Throwable) {
+            handleException(e)
         }
-        return Resource.Success(data = response)
+
     }
 
 }

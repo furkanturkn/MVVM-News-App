@@ -1,6 +1,5 @@
 package com.furkan.mvvm_news_app.util
 
-import okhttp3.ResponseBody
 import org.json.JSONObject
 import retrofit2.HttpException
 import java.time.LocalDate

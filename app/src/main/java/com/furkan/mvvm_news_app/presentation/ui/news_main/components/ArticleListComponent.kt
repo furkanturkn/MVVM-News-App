@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.furkan.mvvm_news_app.presentation.ui.news_main.NewsMainEvent
 import com.furkan.mvvm_news_app.presentation.ui.news_main.NewsMainViewModel
 
 @Composable
@@ -41,7 +42,10 @@ fun ArticleList(
             ArticleItem(
                 article = articleList[articleIndex],
                 navController = navController,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                onFavoriteTrigger = {
+                    viewModel.onEvent(NewsMainEvent.SaveFavoriteToLocalDb(it))
+                }
             )
         }
 

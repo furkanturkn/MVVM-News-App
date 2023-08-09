@@ -1,11 +1,17 @@
 package com.furkan.mvvm_news_app.di
 
+import android.content.Context
+import androidx.room.Room
 import com.furkan.mvvm_news_app.BuildConfig
+import com.furkan.mvvm_news_app.data.local.ArticleDatabase
+import com.furkan.mvvm_news_app.data.local.dao.ArticleDao
 import com.furkan.mvvm_news_app.data.remote.NewsApi
+import com.furkan.mvvm_news_app.repository.NewsLocalRepository
 import com.furkan.mvvm_news_app.repository.NewsRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -33,7 +39,6 @@ object AppModule {
     }
 
 
-
     @Singleton
     @Provides
     fun provideNewsApi(
@@ -53,5 +58,23 @@ object AppModule {
         api: NewsApi
     ) = NewsRepository(api)
 
+    @Singleton
+    @Provides
+    fun provideNewsLocalRepository(
+        db: ArticleDao
+    ) = NewsLocalRepository(db)
+
+
+    @Provides
+    @Singleton
+    fun provideDatabase(@ApplicationContext context: Context): ArticleDatabase {
+        return Room.databaseBuilder(context, ArticleDatabase::class.java, "news_database")
+            .build()
+    }
+
+    @Provides
+    fun provideArticleDao(database: ArticleDatabase): ArticleDao {
+        return database.articleDao()
+    }
 
 }

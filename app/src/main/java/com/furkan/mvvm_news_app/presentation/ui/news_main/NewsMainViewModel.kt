@@ -4,7 +4,9 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.furkan.mvvm_news_app.data.local.mapper.toArticleEntity
 import com.furkan.mvvm_news_app.data.remote.responses.Article
+import com.furkan.mvvm_news_app.repository.NewsLocalRepository
 import com.furkan.mvvm_news_app.repository.NewsRepository
 import com.furkan.mvvm_news_app.util.Constants.NEWS_API_PAGE_SIZE
 import com.furkan.mvvm_news_app.util.Constants.NEWS_API_TOPIC
@@ -14,20 +16,20 @@ import com.furkan.mvvm_news_app.util.getCurrentDateTimeString
 import com.furkan.mvvm_news_app.util.nDaysAfterFromDateString
 import com.furkan.mvvm_news_app.util.nDaysBeforeFromDateString
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class NewsMainViewModel @Inject constructor(
-    private val repository: NewsRepository
+    private val repository: NewsRepository,
+    private val localRepository: NewsLocalRepository
 ) : ViewModel() {
 
     private val _isDatePickerDialogVisible = mutableStateOf(false)
     val isDatePickerDialogVisible: State<Boolean> = _isDatePickerDialogVisible
 
-    private val _pickedDate = mutableStateOf(getCurrentDateTimeString().nDaysBeforeFromDateString(10))
+    private val _pickedDate =
+        mutableStateOf(getCurrentDateTimeString().nDaysBeforeFromDateString(10))
     val pickedDate: State<String> = _pickedDate
 
 
@@ -46,15 +48,24 @@ class NewsMainViewModel @Inject constructor(
             is NewsMainEvent.ShowDatePickerDialog -> {
                 _isDatePickerDialogVisible.value = true
             }
+
             is NewsMainEvent.DismissDatePickerDialog -> {
                 _isDatePickerDialogVisible.value = false
             }
+
             is NewsMainEvent.FetchNews -> {
                 fetchNews(event.fromDate)
             }
+
             is NewsMainEvent.UpdatePickedDate -> {
                 _pickedDate.value = event.pickedDate
                 refreshNews()
+            }
+
+            is NewsMainEvent.SaveFavoriteToLocalDb -> {
+                viewModelScope.launch {
+                    localRepository.insertOrUpdateArticle(event.article.toArticleEntity())
+                }
             }
         }
     }

@@ -116,7 +116,12 @@ dependencies {
     // Palette
     implementation ("androidx.palette:palette:1.0.0")
 
-    //Datetime picker
+    // Datetime picker
     implementation ("io.github.vanpra.compose-material-dialogs:datetime:0.8.1-rc")
+
+    // Room
+    implementation ("androidx.room:room-runtime:2.5.2")
+    kapt ("androidx.room:room-compiler:2.5.2")
+    implementation ("androidx.room:room-ktx:2.5.2")
 
 }

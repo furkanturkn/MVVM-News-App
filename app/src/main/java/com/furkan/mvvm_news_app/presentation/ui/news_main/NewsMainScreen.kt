@@ -1,7 +1,9 @@
 package com.furkan.mvvm_news_app.presentation.ui.news_main
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -22,8 +24,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.furkan.mvvm_news_app.R
 import com.furkan.mvvm_news_app.presentation.core_components.StandardButton
+import com.furkan.mvvm_news_app.presentation.theme.SpaceLarge
+import com.furkan.mvvm_news_app.presentation.theme.SpaceSmall
 import com.furkan.mvvm_news_app.presentation.ui.news_main.components.ArticleList
 import com.furkan.mvvm_news_app.presentation.ui.news_main.components.CustomDatePickerDialog
+import com.furkan.mvvm_news_app.util.Screen
 import com.furkan.mvvm_news_app.util.UiText
 
 @Composable
@@ -38,7 +43,7 @@ fun NewsMainScreen(
     ) {
         Column {
 
-            if(viewModel.isDatePickerDialogVisible.value){
+            if (viewModel.isDatePickerDialogVisible.value) {
                 CustomDatePickerDialog(
                     onDismissRequest = {
                         viewModel.onEvent(NewsMainEvent.DismissDatePickerDialog)
@@ -49,14 +54,8 @@ fun NewsMainScreen(
                     }
                 )
             }
-            Spacer(modifier = Modifier.height(20.dp))
-            StandardButton(
-                onClick = {
-                    viewModel.onEvent(NewsMainEvent.ShowDatePickerDialog)
-                },
-                resId = R.string.pick_date,
-                textColor = Color.White
-            )
+            Spacer(modifier = Modifier.height(SpaceLarge))
+
             Image(
                 painter = painterResource(id = R.drawable.worldnewsicon),
                 contentDescription = "news icon",
@@ -64,11 +63,36 @@ fun NewsMainScreen(
                     .fillMaxWidth()
                     .align(CenterHorizontally)
             )
-            Spacer(modifier = Modifier.height(16.dp))
 
-            if(viewModel.loadError.value.asString(context) == UiText.errorNon().asString(context)){
+            Spacer(modifier = Modifier.height(SpaceLarge))
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+                StandardButton(
+                    onClick = {
+                        viewModel.onEvent(NewsMainEvent.ShowDatePickerDialog)
+                    },
+                    resId = R.string.pick_date,
+                    textColor = Color.White
+                )
+                StandardButton(
+                    onClick = {
+                        navController.navigate(Screen.FavoriteArticlesScreen.route)
+                    },
+                    resId = R.string.my_favorites,
+                    textColor = Color.White
+                )
+            }
+
+            Spacer(modifier = Modifier.height(SpaceSmall))
+
+            if (viewModel.loadError.value.asString(context) == UiText.errorNon()
+                    .asString(context)
+            ) {
                 ArticleList(navController = navController)
-            }else {
+            } else {
                 Text(
                     text = viewModel.loadError.value.asString(context),
                     color = Color.DarkGray,

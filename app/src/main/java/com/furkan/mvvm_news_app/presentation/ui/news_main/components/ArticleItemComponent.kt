@@ -8,7 +8,11 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,18 +33,20 @@ import coil.compose.SubcomposeAsyncImageContent
 import coil.request.ImageRequest
 import com.furkan.mvvm_news_app.data.remote.responses.Article
 import com.furkan.mvvm_news_app.util.Constants.ARTICLE_DETAIL_TEXT_LENGTH
+import com.furkan.mvvm_news_app.util.Screen
 
 @Composable
 fun ArticleItem(
     article: Article,
     navController: NavController,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onFavoriteTrigger: (Article) -> Unit? = {},
 ) {
     Column(
         modifier = modifier
             .clickable {
                 navController.navigate(
-                    "article_detail_screen/${Uri.encode(article.url)}"
+                    "${Screen.ArticleDetailScreen.route}/${Uri.encode(article.url)}"
                 )
             }
             .background(
@@ -85,8 +91,22 @@ fun ArticleItem(
                     .fillMaxWidth()
                     .padding(12.dp)
                     .background(Color.Black.copy(alpha = 0.7f))
-
             )
+
+            IconButton(
+                onClick = {
+                    onFavoriteTrigger(article)
+                },
+                modifier = Modifier
+                    .padding(8.dp)
+                    .align(Alignment.BottomEnd)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Favorite,
+                    contentDescription = null,
+                    tint = Color.Red
+                )
+            }
         }
         Text(
             text = "${article.description.take(ARTICLE_DETAIL_TEXT_LENGTH)}...",
@@ -95,7 +115,7 @@ fun ArticleItem(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(12.dp)
-
         )
+
     }
 }

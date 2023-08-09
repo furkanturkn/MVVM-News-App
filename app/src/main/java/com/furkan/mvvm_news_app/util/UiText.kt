@@ -32,6 +32,7 @@ sealed class UiText {
         fun unknownError(): UiText {
             return StringResource(R.string.error_unknown)
         }
+
         fun errorNon(): UiText {
             return StringResource(R.string.error_non)
         }

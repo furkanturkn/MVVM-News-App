@@ -1,4 +1,4 @@
-package com.furkan.mvvm_news_app.presentation.article_detail.components
+package com.furkan.mvvm_news_app.presentation.ui.article_detail.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

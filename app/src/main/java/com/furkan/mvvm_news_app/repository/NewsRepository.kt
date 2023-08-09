@@ -11,9 +11,19 @@ import javax.inject.Inject
 class NewsRepository @Inject constructor(
     private val api: NewsApi
 ) {
-    suspend fun searchForNews(searchQuery: String, pageNumber: Int): Resource<NewsResponse> {
+    suspend fun searchForNews(
+        searchQuery: String,
+        pageNumber: Int,
+        fromDate: String,
+        toDate: String
+    ): Resource<NewsResponse> {
         val response = try {
-            api.getNews(searchQuery, pageNumber)
+            api.getNews(
+                searchQuery = searchQuery,
+                pageNumber = pageNumber,
+                fromDate = fromDate,
+                toDate = toDate
+            )
         } catch (e: Exception) {
             Timber.e(e)
             return Resource.Error(message = e.localizedMessage!!)

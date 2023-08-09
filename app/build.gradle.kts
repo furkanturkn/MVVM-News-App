@@ -13,7 +13,7 @@ android {
 
     defaultConfig {
         applicationId = "com.furkan.mvvm_news_app"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 33
         versionCode = 1
         versionName = "1.0"
@@ -115,5 +115,8 @@ dependencies {
 
     // Palette
     implementation ("androidx.palette:palette:1.0.0")
+
+    //Datetime picker
+    implementation ("io.github.vanpra.compose-material-dialogs:datetime:0.8.1-rc")
 
 }

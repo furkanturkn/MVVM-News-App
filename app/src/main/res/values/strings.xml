@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">MVVM-News-App</string>
+
+    <string name="pick_date">Pick Date</string>
+    <string name="pick_date_picker_desc">Please pick date you want to see.</string>
+    <string name="yes">Yes</string>
+    <string name="cancel">Cancel</string>
+    <string name="info">Info</string>
+
 </resources>

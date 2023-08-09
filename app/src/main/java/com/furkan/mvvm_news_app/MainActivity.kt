@@ -9,8 +9,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.furkan.mvvm_news_app.presentation.article_detail.ArticleDetailScreen
-import com.furkan.mvvm_news_app.presentation.news_main.NewsMainScreen
+import com.furkan.mvvm_news_app.presentation.ui.article_detail.ArticleDetailScreen
+import com.furkan.mvvm_news_app.presentation.ui.news_main.NewsMainScreen
 import com.furkan.mvvm_news_app.presentation.theme.MVVMNewsAppTheme
 import com.furkan.mvvm_news_app.util.Constants.NAV_ARG_ARTICLE_URL
 import com.furkan.mvvm_news_app.util.Constants.NOT_FOUND_URL
@@ -29,7 +29,9 @@ class MainActivity : ComponentActivity() {
                     startDestination = Screen.NewsMainScreen.route
                 ) {
                     composable(Screen.NewsMainScreen.route) {
-                        NewsMainScreen(navController = navController)
+                        NewsMainScreen(
+                            navController = navController
+                        )
                     }
                     composable(
                         "${Screen.ArticleDetailScreen.route}/{$NAV_ARG_ARTICLE_URL}",

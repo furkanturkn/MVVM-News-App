@@ -17,6 +17,10 @@ interface NewsApi {
         pageNumber: Int = DEFAULT_NEWS_API_PAGE_NUMBER,
         @Query("pageSize")
         pageSize: Int? = NEWS_API_PAGE_SIZE,
+        @Query("from")
+        fromDate: String,
+        @Query("to")
+        toDate: String,
         @Query("apiKey")
         apiKey: String = BuildConfig.API_KEY
     ): NewsResponse

@@ -1,4 +1,4 @@
-package com.furkan.mvvm_news_app.presentation.article_detail
+package com.furkan.mvvm_news_app.presentation.ui.article_detail
 
 import android.net.Uri
 import androidx.compose.foundation.background
@@ -13,8 +13,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.furkan.mvvm_news_app.presentation.article_detail.components.ArticleDetailTopSection
-import com.furkan.mvvm_news_app.presentation.article_detail.components.CustomWebView
+import com.furkan.mvvm_news_app.presentation.ui.article_detail.components.ArticleDetailTopSection
+import com.furkan.mvvm_news_app.presentation.ui.article_detail.components.CustomWebView
 
 @Composable
 fun ArticleDetailScreen(

@@ -1,4 +1,4 @@
-package com.furkan.mvvm_news_app.presentation.article_detail.components
+package com.furkan.mvvm_news_app.presentation.ui.article_detail.components
 
 import android.webkit.WebView
 import android.webkit.WebViewClient

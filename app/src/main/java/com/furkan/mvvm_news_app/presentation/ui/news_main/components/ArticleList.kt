@@ -1,4 +1,4 @@
-package com.furkan.mvvm_news_app.presentation.news_main.components
+package com.furkan.mvvm_news_app.presentation.ui.news_main.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -19,7 +19,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.furkan.mvvm_news_app.presentation.news_main.NewsMainViewModel
+import com.furkan.mvvm_news_app.presentation.ui.news_main.NewsMainViewModel
+import com.furkan.mvvm_news_app.util.getCurrentDateTimeString
+import com.furkan.mvvm_news_app.util.nDaysBeforeFromDateString
 
 @Composable
 fun ArticleList(
@@ -61,7 +63,7 @@ fun ArticleList(
         if (!isLoading && !endReachOfPage) {
             item {
                 LaunchedEffect(key1 = true) {
-                    viewModel.getBreakingNews()
+                    viewModel.fetchNews(viewModel.pickedDate.value)
                 }
             }
         }

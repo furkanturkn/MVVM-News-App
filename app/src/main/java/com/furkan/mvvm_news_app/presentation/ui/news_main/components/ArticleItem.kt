@@ -1,4 +1,4 @@
-package com.furkan.mvvm_news_app.presentation.news_main.components
+package com.furkan.mvvm_news_app.presentation.ui.news_main.components
 
 import android.net.Uri
 import androidx.compose.foundation.background

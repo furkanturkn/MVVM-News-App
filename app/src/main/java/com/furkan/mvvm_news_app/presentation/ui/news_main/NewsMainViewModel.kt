@@ -75,7 +75,7 @@ class NewsMainViewModel @Inject constructor(
         newsList.value = listOf()
     }
 
-    fun fetchNews(fromDate: String) = viewModelScope.launch {
+    private fun fetchNews(fromDate: String) = viewModelScope.launch {
         isLoading.value = true
         val result = repository.searchForNews(
             searchQuery = NEWS_API_TOPIC,

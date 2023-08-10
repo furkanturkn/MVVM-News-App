@@ -65,7 +65,7 @@ fun ArticleList(
         if (!isLoading && !endReachOfPage) {
             item {
                 LaunchedEffect(key1 = true) {
-                    viewModel.fetchNews(viewModel.pickedDate.value)
+                    viewModel.onEvent(NewsMainEvent.FetchNews(viewModel.pickedDate.value))
                 }
             }
         }

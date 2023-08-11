@@ -21,12 +21,13 @@ To run this application locally, follow these steps:
 
 1. Clone this repository to your local machine using:
 
-   bash
    git clone https://github.com/furkanturkn/MVVM-News-App.git
+
 2. local.properties
-    bash
-    BASE_URL=https://newsapi.org/
+
+    BASE_URL=https://newsapi.org/  
     API_KEY=YOUR_NEWS_API_KEY
+
 ## Features
 - Fetches news articles from the News API.
 - Utilizes the MVVM architecture for separation of concerns and maintainability.
